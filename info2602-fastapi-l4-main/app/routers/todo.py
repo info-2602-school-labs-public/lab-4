@@ -65,7 +65,7 @@ def update_todo(id:int, db:SessionDep, user:AuthDep, todo_data:TodoUpdate):
         )
 
 @todo_router.delete('/todo/{id}', status_code=status.HTTP_200_OK)
-def update_todo(id:int, db:SessionDep, user:AuthDep):
+def delete_todo(id:int, db:SessionDep, user:AuthDep):
 
     todo = db.exec(select(Todo).where(Todo.id==id, Todo.user_id==user.id)).one_or_none()
     if not todo:
@@ -107,7 +107,7 @@ def update_todo(id:int, db:SessionDep, user:AuthDep):
 ### Part 1 - Create Category
 
 @todo_router.post("/category", response_model=CategoryResponse)
-def create_category(db: SessionDep, user: AuthDep, category_data: CategoryResponse):
+def create_category(db: SessionDep, user: AuthDep, category_data: CategoryCreate):
     category = Category(
         text=category_data.text, 
         user_id=user.id

@@ -27,7 +27,7 @@ async def login_for_access_token(
                 headers={"WWW-Authenticate": "Bearer"},
             )
         
-    access_token = create_access_token(data={"sub": user.username, "role": user.role},)
+    access_token = create_access_token(data={"sub": user.id, "role": user.role},)
 
     return Token(access_token=access_token, token_type="bearer")
 
@@ -45,6 +45,7 @@ def signup_user(user_data: UserCreate, db:SessionDep):
         password=encrypt_password(user_data.password)
     )
     db.add(new_user)
+    db.refresh(new_user)
     db.commit()
     return new_user
   except Exception:

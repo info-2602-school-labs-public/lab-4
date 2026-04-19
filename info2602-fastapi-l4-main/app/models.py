@@ -43,6 +43,16 @@ class Category(SQLModel, table=True):
 
     todos:list['Todo'] = Relationship(back_populates="categories", link_model=TodoCategory)
 
+class CategoryResponse(SQLModel):
+    id: Optional[int] = Field(primary_key=True, default=None)
+    text:str
+    # Exercise 1, Step 3 ,Part 2
+    class Config:
+        from_attributes = True
+
+class CategoryCreate(SQLModel):
+    text: str
+
 class TodoCreate(SQLModel):
     text:str
 
@@ -84,12 +94,7 @@ class Todo(SQLModel, table=True):
 ### Update the response datamodel for todos such that it also returns a list of category items. A single category item should show the ID of the category and the category's text
 
 #### Step 1 - Create a Category Response Model
-class CategoryResponse(SQLModel):
-    id: Optional[int] = Field(primary_key=True, default=None)
-    text:str
-    # Exercise 1, Step 3 ,Part 2
-    class Config:
-        from_attributes = True
+##### See line 46 to 51, the CategoryResponse model between the Category model, and the CategoryCreate model
 
 #### Step 2 - Update the TodoResponse model to include a list of categories
 ##### See the updated TodoResponse model above on line 53
@@ -100,6 +105,7 @@ class CategoryResponse(SQLModel):
 
 
 #====================================================================
+
 
 """ from sqlmodel import Field, SQLModel, Relationship
 from typing import Optional
